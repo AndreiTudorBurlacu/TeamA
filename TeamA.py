@@ -11,7 +11,7 @@ host = "http://172.18.4.158:8000"  # Add your server host URL
 post_url = f"{host}/submit-word"
 get_url = f"{host}/get-word"
 status_url = f"{host}/status"
-
+player_id = "FBKee5Ie5q"
 # Game Constants
 NUM_ROUNDS = 5
 MODEL_PATH = "GoogleNews-vectors-negative300.bin"
@@ -98,10 +98,10 @@ def play_game(player_id):
         while round_num != round_id:
             response = requests.get(get_url)
             data = response.json()
-            print(data)
+            print(response.json())
 
-            sys_word = data.get("word")
-            round_num = data.get("round")
+            sys_word = response.json()['word']
+            round_num = response.json()['round']
 
             time.sleep(1)  # Small delay before retrying
 
@@ -117,3 +117,4 @@ def play_game(player_id):
         data = {"player_id": player_id, "word_id": chosen_word, "round_id": round_id}
         response = requests.post(post_url, json=data)
         print(response.json())  # Show submission result
+
